@@ -1,12 +1,13 @@
-import { Navigation } from "./Navigation/Navigation"
-import { Top } from "./Top/Top"
+import st from './Header.module.scss';
+import { Navigation } from './Navigation/Navigation';
+import { Top } from './Top/Top';
 
-export const Header = ({ list }) => {
+export const Header = () => {
 
   return (
-    <header>
+    <header className={st.header}>
       <Top />
-      <Navigation list={list} />
+      <Navigation />
     </header>
   )
-}
+};
