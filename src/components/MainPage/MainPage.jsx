@@ -1,30 +1,45 @@
-import st from './MainPage.module.scss';
-import { Container } from "../Layout/Container/Container";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import { fetchGoods } from "../../features/goodsSlice";
-import { Product } from '../Product/Product.jsx';
+import { fetchCategory, fetchGender } from "../../features/goodsSlice";
+import { useParams } from 'react-router-dom';
+import { setActiveGender } from '../../features/navigationSlice.js';
+import { Goods } from "../../components/Goods/Goods.jsx";
+import { Banner } from "../Banner/Banner.jsx";
 
-export const MainPage = ({ gender = 'women' }) => {
+export const MainPage = () => {
+  const { gender, category } = useParams();
   const dispatch = useDispatch();
-  const { goodsList } = useSelector(state => state.goods);
+
+  const { activeGender, categories, genderList } = useSelector(state => state.navigation);
+  const genderData = categories[activeGender];
+  const categoryData = genderData?.list.find(item => item.slug === category);
 
   useEffect(() => {
-    dispatch(fetchGoods(gender));
-  }, [gender, dispatch]);
+    if (gender) {
+      dispatch(setActiveGender(gender));
+    } else if (genderList[0]) {
+      dispatch(setActiveGender(genderList[0]));
+      dispatch(fetchGender(genderList[0]));
+    }
+
+  }, [gender, genderList, dispatch]);
+
+  useEffect(() => {
+    if (gender && category) {
+      dispatch(fetchCategory({ gender, category }));
+      return;
+    }
+
+    if (gender) {
+      dispatch(fetchGender(gender));
+      return;
+    }
+  }, [gender, category, dispatch]);
 
   return (
-    <section className={st.goods}>
-      <Container>
-        <h2 className={st.title}>Новинки</h2>
-        <ul className={st.list}>
-          {goodsList.map(item => (
-            <li key={item.id}>
-              <Product {...item} />
-            </li>
-          ))}
-        </ul>
-      </Container>
-    </section>
+    <>
+      {!category && <Banner data={genderData?.banner} />}
+      <Goods categoryData={categoryData} />
+    </>
   )
 };

@@ -17,14 +17,16 @@ export const Footer = () => {
               {genderList.map(gender => (
                 <li key={gender} className={st.categoryItem}>
                   <h3 className={st.categorySubtitle}>
-                    <NavLink className={st.link} to={gender}>{categories[gender].title}</NavLink>
+                    <NavLink
+                      className={st.link}
+                      to={`/catalog/${gender}`}>{categories[gender].title}</NavLink>
                   </h3>
                   <ul className={st.categorySublist}>
                     {categories[gender].list.map(category => (
                       <li key={category.slug}>
                         <NavLink
                           className={st.link}
-                          to={`${gender}/${category.slug}`}>{category.title}</NavLink>
+                          to={`/catalog/${gender}/${category.slug}`}>{category.title}</NavLink>
                       </li>
                     ))}
                   </ul>

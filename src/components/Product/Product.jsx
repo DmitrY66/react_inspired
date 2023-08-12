@@ -8,8 +8,8 @@ export const Product = ({ id, pic, title, price, colors }) => {
 
   return (
     <article className={st.product}>
-      <NavLink className={st.product} to={`product/${id}`}>
-        <img className={st.image} src={`${API_URL}${pic}`} />
+      <NavLink className={st.product} to={`/product/${id}`}>
+        <img className={st.image} src={`${API_URL}${pic}`} alt={title} />
 
         <h3 className={st.title}>{title}</h3>
 

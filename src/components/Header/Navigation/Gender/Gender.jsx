@@ -4,7 +4,7 @@ import cn from 'classnames';
 import { useSelector } from 'react-redux';
 
 export const Gender = () => {
-  const {activeGender, genderList, categories} = useSelector(state => state.navigation);
+  const { activeGender, genderList, categories } = useSelector(state => state.navigation);
 
   return (
     <ul className={st.gender}>
@@ -14,7 +14,7 @@ export const Gender = () => {
             className={({ isActive }) =>
               cn(st.link, (isActive || gender === activeGender) && st.linkActive)
             }
-            to={gender}>{categories[gender].title}</NavLink>
+            to={`/catalog/${gender}`}>{categories[gender].title}</NavLink>
         </li>
       ))}
     </ul>
